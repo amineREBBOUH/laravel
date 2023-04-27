@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>imagess</h1>
+    <div class="container">
+        <h1>Ma galerie d'images</h1>
+        <div class="gallery">
+            <!-- galerie d'images générée dynamiquement -->
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+        <script>
+        $(function() {
+            $.ajax({
+                url: 'http://127.0.0.1:8000/api/images',
+                method: 'GET',
+                dataType: 'json',
+                success: function(response) {
+                    var gallery = $('.gallery');
+                    console.log(response);
+                    $.each(response, function(index, image) {
+                        var img = $('<img>').attr('src', 'http://localhost:8000/images/'+image.pict);
+                        var item = $('<div>').addClass('gallery-item').append(img);
+                        gallery.append(item);
+                    });
+                },
+                error: function() {
+                    alert('Erreur lors de la récupération des images de la galerie.');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
